@@ -2,6 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const {connectDB} = require('./config/db')
+const transactionRoutes = require('./routes/transactionRoutes')
+const budgetRoutes = require('./routes/budgetRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes')
 
 dotenv.config();
 connectDB();
@@ -18,6 +21,10 @@ app.use(express.urlencoded({extended: true}));
 //Routes
 const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth',authRoutes);
+app.use('/api/transactions', transactionRoutes);
+app.use('/api/budgets',budgetRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+
 
 //Success message
 app.get('/', (req, res)=>{
