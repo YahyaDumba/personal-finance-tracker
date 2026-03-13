@@ -10,7 +10,8 @@ const pool = mysql2.createPool({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     waitForConnections: true,
-    connectionLimit: 10
+    connectionLimit: 10,
+    charset: 'utf8mb4'
 });
 
 const connectDB = async() => {
@@ -20,7 +21,7 @@ const connectDB = async() => {
         connection.release();
     } catch (error) {
         console.error('MySQL Connection Error', error.message);
-        process.exit(1);
+        // process.exit(1);
     };
 };
 

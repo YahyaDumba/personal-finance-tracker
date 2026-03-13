@@ -12,9 +12,12 @@ app.use(cors({
     origin: process.env.CLIENT_URL,
     credentials:true
 }));
-
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+
+//Routes
+const authRoutes = require('./routes/authRoutes');
+app.use('/api/auth',authRoutes);
 
 //Success message
 app.get('/', (req, res)=>{
