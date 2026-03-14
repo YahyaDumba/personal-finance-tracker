@@ -70,3 +70,11 @@
     @apply flex items-center justify-between mb-6 md:mb-8;
   }
 }
+
+@layer base {
+  ul, ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+}
