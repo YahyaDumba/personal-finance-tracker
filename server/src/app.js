@@ -5,6 +5,7 @@ const {connectDB} = require('./config/db')
 const transactionRoutes = require('./routes/transactionRoutes')
 const budgetRoutes = require('./routes/budgetRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes')
+const categoryRoutes = require('./routes/categoryRoutes');
 
 dotenv.config();
 connectDB();
@@ -24,6 +25,7 @@ app.use('/api/auth',authRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/budgets',budgetRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/categories', categoryRoutes);
 
 
 //Success message

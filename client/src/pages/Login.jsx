@@ -41,7 +41,7 @@ export default function Login() {
                 {/* Logo */}
                 <div className="text-center mb-8">
                     <Link to="/" className="inline-flex items-center gap-2">
-                        <span className="text-3xl">💎</span>
+                        {/* <span className="text-3xl">💎</span> */}
                         <span className="text-2xl font-bold text-white">FinTrack</span>
                     </Link>
                     <h1 className="text-3xl font-bold text-white mt-6 mb-2">Welcome back</h1>

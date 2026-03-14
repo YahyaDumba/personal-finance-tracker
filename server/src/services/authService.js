@@ -21,7 +21,9 @@ const registerUser = async (fullName, email, password) => {
         [fullName, email, hashedPassword, verificationToken]);
 
     //Send Verification Email
-    await sendVerificationEmail(email, verificationToken);
+    sendVerificationEmail(email, verificationToken).catch((err) => {
+        console.log('Email sending failed (non-critical):', err.message);
+    });
     return { userId: result.insertId };
 };
 
@@ -61,15 +63,29 @@ const loginUser = async (email, password) => {
 };
 
 const verifyEmail = async (token) => {
-    const [users] = await pool.query(
-        'SELECT id FROM users WHERE verificationToken = ?', [token]);
+  console.log('VERIFYING TOKEN:', token);
 
-    if (users.length == 0) {
-        throw new Error('Token is Invalid');
-    }
+  // First check if user is already verified with this token
+  const [users] = await pool.query(
+    'SELECT id, isVerified FROM users WHERE verificationToken = ? OR (isVerified = TRUE AND verificationToken IS NULL)',
+    [token]
+  );
+
+  console.log('USERS FOUND:', users.length);
+
+  if (users.length === 0) {
+    throw new Error('Token is Invalid');
+  }
+
+  // Update if not already verified
+  if (!users[0].isVerified) {
     await pool.query(
-        'UPDATE users SET isVerified = TRUE, verificationToken = NULL WHERE id = ?', [users[0].id]);
-    return true;
+      'UPDATE users SET isVerified = TRUE, verificationToken = NULL WHERE id = ?',
+      [users[0].id]
+    );
+  }
+
+  return true;
 };
 
 

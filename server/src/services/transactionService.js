@@ -3,11 +3,11 @@ const { pool } = require('../config/db')
 const addTransaction = async (userId, categoryId, type, amount, description, frequency, transactionDate) => {
     const [result] = await pool.query(
         `INSERT INTO transactions (userId, categoryId, type, amount, description, frequency, transactionDate) VALUES (?, ?, ?, ?, ?, ?, ?)`,
-        [userId, categoryId, type, amount, description, frequency, transactionDate]);
+        [userId, categoryId || null, type, amount, description, frequency, transactionDate]);
     return { transactionId: result.insertId };
 };
 
-const getTransaction = async (userId, type, startDate, endDate) => {
+const getTransactions = async (userId, type, startDate, endDate) => {
     const [rows] = await pool.query(
         'CALL GetTransactionHistory (?, ?, ?, ?)',
         [userId, type || null, startDate || null, endDate || null]);
@@ -37,9 +37,9 @@ const updateTransaction = async (userId, transactionId, fields) => {
     }
 
     const { categoryId, type, amount, description, frequency, transactionDate } = fields;
-    await pool.query(`UDPATE transactions SET categoryId=?, type=?, amount=?, description=?, frequency=?, transactionDate=? 
+    await pool.query(`UPDATE transactions SET categoryId=?, type=?, amount=?, description=?, frequency=?, transactionDate=? 
      WHERE id = ? AND userId = ?`, [categoryId, type, amount, description, frequency, transactionDate, transactionId, userId]);
     return true;
 }
 
-module.exports = {addTransaction, getTransaction, deleteTransaction, updateTransaction}
+module.exports = {addTransaction, getTransactions, deleteTransaction, updateTransaction}

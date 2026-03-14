@@ -1,4 +1,4 @@
-const { addTransaction, getTransaction, deleteTransaction, updateTransaction } = require('../services/transactionService');
+const { addTransaction, getTransactions, deleteTransaction, updateTransaction } = require('../services/transactionService');
 const { successResponse, errorResponse } = require('../utils/apiResponse');
 
 const createTransaction = async (req, res) => {
@@ -24,23 +24,21 @@ const createTransaction = async (req, res) => {
 
         return successResponse(res, 201, 'Transaction created successfully', data);
     } catch (error) {
+        console.log(error.message)
         return errorResponse(res, 500, 'Server Error');
     }
 };
 
-const fetchTransaction = async (req, res) => {
-    const userId = req.user.id;
-    const { type, startDate, endDate } = req.query;
+const fetchTransactions = async (req, res) => {
+  const userId = req.user.id;
+  const { type, startDate, endDate } = req.query;
 
-    try {
-        const data = await getTransaction(
-            userId, type, startDate, endDate
-        );
-
-        return successResponse(res, 200, 'Transaction fetched successfully', data);
-    } catch (error) {
-        return errorResponse(res, 500, 'Server Error');
-    }
+  try {
+    const data = await getTransactions(userId, type, startDate, endDate);
+    return successResponse(res, 200, 'Transaction fetched successfully', data);
+  } catch (error) {
+    return errorResponse(res, 500, 'Server Error');
+  }
 };
 
 const removeTransaction = async (req, res) => {
@@ -76,4 +74,4 @@ const editTransaction = async (req, res) => {
     }
 };
 
-module.exports = { createTransaction, fetchTransaction, removeTransaction, editTransaction };
+module.exports = { createTransaction, fetchTransactions, removeTransaction, editTransaction };

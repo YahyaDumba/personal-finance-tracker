@@ -38,7 +38,7 @@ const login = async(req, res) => {
 }
 
 const verify = async(req, res)=> {
-    const {token} = req.body;
+    const {token} = req.query;
     if(!token){
         return errorResponse(res, 400,'Token is required');
     }

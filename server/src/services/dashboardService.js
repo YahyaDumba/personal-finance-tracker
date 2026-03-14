@@ -18,7 +18,7 @@ const getMonthlySummary = async (userId, month, year) => {
 const getRecentTransactions = async (userId) => {
     const [rows] = await pool.query(
         `SELECT t.*, c.name AS categoryName 
-        FROM transaction t
+        FROM transactions t
         LEFT JOIN categories c ON t.categoryId = c.id
         WHERE t.userId = ?
         ORDER BY t.createdAt DESC
