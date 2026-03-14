@@ -33,6 +33,8 @@ export const deleteBudget = (id) => api.delete(`/budgets/${id}`);
 //Categories
 export const getCategories = (params) => api.get('/categories', {params});
 export const createCategory = (data) => api.post('/categories', data);
+export const deleteCategory = (id) => api.delete(`/categories/${id}`);
+
 
 //Dashboard
 export const getDashboard = (params) => api.get('/dashboard', {params});

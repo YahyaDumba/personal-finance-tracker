@@ -17,4 +17,15 @@ const getCategories = async(userId) => {
     return rows;
 }
 
-module.exports = {createCategory, getCategories};
+const deleteCategory = async (userId, categoryId) => {
+    const [result] = await pool.query(
+        'DELETE FROM categories WHERE id = ? AND userId = ?',
+        [categoryId, userId]
+    );
+    if (result.affectedRows === 0) {
+        throw new Error('Category not found');
+    }
+    return true;
+};
+
+module.exports = {createCategory, getCategories, deleteCategory};

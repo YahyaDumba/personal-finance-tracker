@@ -1,4 +1,4 @@
-const { createCategory, getCategories } = require('../services/categoryService');
+const { createCategory, getCategories, deleteCategory } = require('../services/categoryService');
 const { successResponse, errorResponse } = require('../utils/apiResponse');
 
 const addCategory = async (req, res) => {
@@ -31,4 +31,18 @@ const fetchCategories = async (req, res) => {
     }
 }
 
-module.exports = { addCategory, fetchCategories };
+const removeCategory = async (req, res) => {
+    const userId = req.user.id;
+    const { id } = req.params;
+    try {
+        await deleteCategory(userId, id);
+        return successResponse(res, 200, 'Category deleted successfully');
+    } catch (error) {
+        if (error.message === 'Category not found') {
+            return errorResponse(res, 404, 'Category not found');
+        }
+        return errorResponse(res, 500, 'Server error');
+    }
+};
+
+module.exports = { addCategory, fetchCategories, removeCategory };
