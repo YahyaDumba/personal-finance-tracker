@@ -65,25 +65,26 @@ export default function Budgets() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900">
+    <div className="page-wrapper">
       <Sidebar />
 
-      <main className="ml-64 p-8">
+      <main className="page-content">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="page-header">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Budgets</h1>
-            <p className="text-gray-500 mt-1">Set and track your monthly budgets</p>
+            <h1 className="page-title">Budgets</h1>
+            <p className="page-subtitle">Set and track your monthly budgets</p>
           </div>
-          <button onClick={() => setShowForm(true)}
-            className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-medium flex items-center gap-2 transition-colors">
-            <Plus className="w-4 h-4" />Set Budget
+          <button onClick={() => setShowForm(true)} className="btn-primary">
+            <Plus className="w-4 h-4" />
+            <span className="hidden sm:inline">Set Budget</span>
+            <span className="sm:hidden">Add</span>
           </button>
         </div>
 
         {/* Add Form */}
         {showForm && (
-          <div className="bg-white border border-blue-200 rounded-2xl p-6 mb-6 shadow-sm">
+          <div className="bg-white border border-blue-200 rounded-2xl p-4 md:p-6 mb-4 md:mb-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-semibold text-gray-900">New Budget</h3>
               <button onClick={() => setShowForm(false)}>
@@ -91,17 +92,15 @@ export default function Budgets() {
               </button>
             </div>
 
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-600 rounded-xl p-3 mb-4 text-sm">{error}</div>
-            )}
+            {error && <div className="form-error">{error}</div>}
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               <div>
                 <label className="text-sm text-gray-500 mb-1 block">Category</label>
                 <select
                   value={formData.categoryId}
                   onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
-                  className="w-full bg-gray-50 border border-gray-300 rounded-xl px-3 py-2.5 text-gray-900 focus:outline-none focus:border-blue-500">
+                  className="input-field">
                   <option value="">Select Category</option>
                   {categories.map((cat) => {
                     const isIncome = cat.type === 'income';
@@ -119,14 +118,14 @@ export default function Budgets() {
                 <input type="number" value={formData.monthlyLimit}
                   onChange={(e) => setFormData({ ...formData, monthlyLimit: e.target.value })}
                   placeholder="5000"
-                  className="w-full bg-gray-50 border border-gray-300 rounded-xl px-3 py-2.5 text-gray-900 focus:outline-none focus:border-blue-500"
+                  className="input-field"
                 />
               </div>
               <div>
                 <label className="text-sm text-gray-500 mb-1 block">Month</label>
                 <select value={formData.month}
                   onChange={(e) => setFormData({ ...formData, month: e.target.value })}
-                  className="w-full bg-gray-50 border border-gray-300 rounded-xl px-3 py-2.5 text-gray-900 focus:outline-none focus:border-blue-500">
+                  className="input-field">
                   {Array.from({ length: 12 }, (_, i) => (
                     <option key={i + 1} value={i + 1}>
                       {new Date(0, i).toLocaleString('default', { month: 'long' })}
@@ -139,18 +138,17 @@ export default function Budgets() {
                 <input type="number" value={formData.year}
                   onChange={(e) => setFormData({ ...formData, year: e.target.value })}
                   placeholder="2026"
-                  className="w-full bg-gray-50 border border-gray-300 rounded-xl px-3 py-2.5 text-gray-900 focus:outline-none focus:border-blue-500"
+                  className="input-field"
                 />
               </div>
             </div>
 
             <div className="flex gap-3 mt-4">
               <button onClick={handleSubmit}
-                className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-xl font-medium flex items-center gap-2 transition-colors">
+                className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-medium flex items-center gap-2 transition-colors text-sm">
                 <Check className="w-4 h-4" />Save Budget
               </button>
-              <button onClick={() => setShowForm(false)}
-                className="btn-secondary">
+              <button onClick={() => setShowForm(false)} className="btn-secondary">
                 Cancel
               </button>
             </div>
@@ -158,13 +156,13 @@ export default function Budgets() {
         )}
 
         {/* Budgets List */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {loading ? (
             <div className="col-span-2 flex items-center justify-center h-32">
-              <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+              <div className="spinner" />
             </div>
           ) : budgets.length === 0 ? (
-            <div className="col-span-2 bg-white border border-gray-200 rounded-2xl p-12 text-center shadow-sm">
+            <div className="col-span-2 card p-12 text-center">
               <PieChart className="w-12 h-12 text-gray-300 mx-auto mb-3" />
               <p className="text-gray-400">No budgets set for this month</p>
             </div>
@@ -175,18 +173,18 @@ export default function Budgets() {
               return (
                 <div key={budget.id} className="card">
                   <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <h3 className="font-semibold text-gray-900">{budget.categoryName}</h3>
+                    <div className="min-w-0">
+                      <h3 className="font-semibold text-gray-900 truncate">{budget.categoryName}</h3>
                       <p className="text-gray-500 text-sm">
                         ₹{Number(budget.spent).toLocaleString()} of ₹{Number(budget.monthlyLimit).toLocaleString()}
                       </p>
                     </div>
-                    <div className="flex items-center gap-2">
-                        {!isOverBudget && (
-                      <span className={`text-sm font-semibold ${isOverBudget ? 'text-red-500' : percentage > 80 ? 'text-yellow-500' : 'text-green-600'}`}>
-                        {budget.percentageUsed || 0}%
-                      </span>
-            )}
+                    <div className="flex items-center gap-2 shrink-0 ml-2">
+                      {!isOverBudget && (
+                        <span className={`text-sm font-semibold ${percentage > 80 ? 'text-yellow-500' : 'text-green-600'}`}>
+                          {budget.percentageUsed || 0}%
+                        </span>
+                      )}
                       <button onClick={() => handleDelete(budget.id)}
                         className="text-gray-400 hover:text-red-500 transition-colors">
                         <Trash2 className="w-4 h-4" />

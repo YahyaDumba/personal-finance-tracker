@@ -12,11 +12,11 @@
 
   /* Buttons */
   .btn-primary {
-    @apply bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-medium flex items-center gap-2 transition-colors;
+    @apply bg-blue-600 hover:bg-blue-500 text-white px-4 py-2.5 rounded-xl font-medium flex items-center gap-2 transition-colors text-sm md:text-base md:px-5;
   }
 
   .btn-secondary {
-    @apply border border-gray-300 text-gray-500 hover:text-gray-900 px-6 py-2.5 rounded-xl transition-colors;
+    @apply border border-gray-300 text-gray-500 hover:text-gray-900 px-4 py-2.5 rounded-xl transition-colors text-sm;
   }
 
   .btn-danger {
@@ -25,16 +25,16 @@
 
   /* Cards */
   .card {
-    @apply bg-white border border-gray-200 rounded-2xl p-6 shadow-sm;
+    @apply bg-white border border-gray-200 rounded-2xl p-4 md:p-6 shadow-sm;
   }
 
   /* Page Header */
   .page-title {
-    @apply text-2xl font-bold text-gray-900;
+    @apply text-xl md:text-2xl font-bold text-gray-900;
   }
 
   .page-subtitle {
-    @apply text-gray-500 mt-1;
+    @apply text-gray-500 mt-1 text-sm md:text-base;
   }
 
   /* Spinner */
@@ -44,7 +44,7 @@
 
   /* Transaction/Budget row */
   .list-item {
-    @apply flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors;
+    @apply flex items-center justify-between p-3 md:p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors;
   }
 
   /* Icon Badge */
@@ -55,5 +55,18 @@
   /* Form error */
   .form-error {
     @apply bg-red-50 border border-red-200 text-red-600 rounded-xl p-3 mb-4 text-sm;
+  }
+
+  /* Page layout with sidebar */
+  .page-wrapper {
+    @apply min-h-screen bg-gray-50 text-gray-900;
+  }
+
+  .page-content {
+    @apply md:ml-64 p-4 md:p-8 pt-16 md:pt-8;
+  }
+
+  .page-header {
+    @apply flex items-center justify-between mb-6 md:mb-8;
   }
 }

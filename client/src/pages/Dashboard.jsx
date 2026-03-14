@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { TrendingUp, TrendingDown, Wallet, Plus, ArrowUpDown} from 'lucide-react';
+import { TrendingUp, TrendingDown, Wallet, Plus, ArrowUpDown } from 'lucide-react';
 import { getDashboard } from '../services/api';
 import useAuthStore from '../store/authStore';
 import Sidebar from '../components/common/Sidebar';
@@ -13,7 +13,7 @@ const StatCard = ({ title, amount, icon: Icon, color, textColor }) => (
         <Icon className={`w-5 h-5 ${textColor}`} />
       </div>
     </div>
-    <div className="text-2xl font-bold text-gray-900">
+    <div className="text-xl md:text-2xl font-bold text-gray-900">
       ₹{Number(amount || 0).toLocaleString()}
     </div>
   </div>
@@ -21,7 +21,7 @@ const StatCard = ({ title, amount, icon: Icon, color, textColor }) => (
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { user, logout } = useAuthStore();
+  const { user } = useAuthStore();
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   const currentMonth = new Date().getMonth() + 1;
@@ -41,40 +41,32 @@ export default function Dashboard() {
     fetchData();
   }, []);
 
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
-
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900">
+    <div className="page-wrapper">
+      <Sidebar />
 
-      {/* Sidebar */}
-<Sidebar />
-
-      {/* Main Content */}
-      <main className="ml-64 p-8">
+      <main className="page-content">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="page-header">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-500 mt-1">Welcome back, {user?.fullName}!</p>
+            <h1 className="page-title">Dashboard</h1>
+            <p className="page-subtitle">Welcome back, {user?.fullName}!</p>
           </div>
-          <Link to="/transactions"
-            className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-medium flex items-center gap-2 transition-colors">
+          <Link to="/transactions" className="btn-primary">
             <Plus className="w-4 h-4" />
-            Add Transaction
+            <span className="hidden sm:inline">Add Transaction</span>
+            <span className="sm:hidden">Add</span>
           </Link>
         </div>
 
         {loading ? (
           <div className="flex items-center justify-center h-64">
-            <div className="spinner"/>
+            <div className="spinner" />
           </div>
         ) : (
           <>
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
               <StatCard
                 title="Total Income"
                 amount={dashboardData?.summary?.totalIncome}
@@ -100,8 +92,8 @@ export default function Dashboard() {
 
             {/* Recent Transactions */}
             <div className="card">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-semibold text-gray-900">Recent Transactions</h2>
+              <div className="flex items-center justify-between mb-4 md:mb-6">
+                <h2 className="text-base md:text-lg font-semibold text-gray-900">Recent Transactions</h2>
                 <Link to="/transactions" className="text-blue-600 text-sm hover:text-blue-500">
                   View all →
                 </Link>
@@ -119,18 +111,17 @@ export default function Dashboard() {
               ) : (
                 <div className="space-y-3">
                   {dashboardData?.recentTransactions?.map((tx) => (
-                    <div key={tx.id}
-                      className="list-item">
-                      <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${tx.type === 'income' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
-                          {tx.type === 'income' ? <TrendingUp className="w-5 h-5" /> : <TrendingDown className="w-5 h-5" />}
+                    <div key={tx.id} className="list-item">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className={`w-9 h-9 md:w-10 md:h-10 shrink-0 rounded-xl flex items-center justify-center ${tx.type === 'income' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
+                          {tx.type === 'income' ? <TrendingUp className="w-4 h-4 md:w-5 md:h-5" /> : <TrendingDown className="w-4 h-4 md:w-5 md:h-5" />}
                         </div>
-                        <div>
-                          <p className="font-medium text-sm text-gray-900">{tx.description || tx.categoryName || 'Transaction'}</p>
+                        <div className="min-w-0">
+                          <p className="font-medium text-sm text-gray-900 truncate">{tx.description || tx.categoryName || 'Transaction'}</p>
                           <p className="text-gray-400 text-xs">{new Date(tx.transactionDate).toLocaleDateString()}</p>
                         </div>
                       </div>
-                      <span className={`font-semibold ${tx.type === 'income' ? 'text-green-600' : 'text-red-500'}`}>
+                      <span className={`font-semibold text-sm shrink-0 ml-2 ${tx.type === 'income' ? 'text-green-600' : 'text-red-500'}`}>
                         {tx.type === 'income' ? '+' : '-'}₹{Number(tx.amount).toLocaleString()}
                       </span>
                     </div>

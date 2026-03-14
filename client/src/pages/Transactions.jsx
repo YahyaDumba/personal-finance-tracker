@@ -90,49 +90,55 @@ export default function Transactions() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900">
+    <div className="page-wrapper">
       <Sidebar />
 
-      <main className="ml-64 p-8">
+      <main className="page-content">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="page-header">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Transactions</h1>
-            <p className="text-gray-500 mt-1">Manage your income and expenses</p>
+            <h1 className="page-title">Transactions</h1>
+            <p className="page-subtitle">Manage your income and expenses</p>
           </div>
-          <button onClick={() => { setShowForm(true); setEditingId(null); }}
+          <button
+            onClick={() => { setShowForm(true); setEditingId(null); }}
             className="btn-primary">
-            <Plus className="w-4 h-4" />Add Transaction
+            <Plus className="w-4 h-4" />
+            <span className="hidden sm:inline">Add Transaction</span>
+            <span className="sm:hidden">Add</span>
           </button>
         </div>
 
         {/* Filters */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-4 mb-6 flex flex-wrap gap-4 shadow-sm">
-          <select
-            value={filter.type}
-            onChange={(e) => setFilter({ ...filter, type: e.target.value })}
-            className="bg-gray-50 border border-gray-300 rounded-xl px-4 py-2 text-gray-700 text-sm focus:outline-none focus:border-blue-500">
-            <option value="">All Types</option>
-            <option value="income">Income</option>
-            <option value="expense">Expense</option>
-          </select>
-          <input type="date" value={filter.startDate}
-            onChange={(e) => setFilter({ ...filter, startDate: e.target.value })}
-            className="bg-gray-50 border border-gray-300 rounded-xl px-4 py-2 text-gray-700 text-sm focus:outline-none focus:border-blue-500"
-          />
-          <input type="date" value={filter.endDate}
-            onChange={(e) => setFilter({ ...filter, endDate: e.target.value })}
-            className="bg-gray-50 border border-gray-300 rounded-xl px-4 py-2 text-gray-700 text-sm focus:outline-none focus:border-blue-500"
-          />
-          <button onClick={() => setFilter({ type: '', startDate: '', endDate: '' })}
-            className="text-gray-500 hover:text-gray-900 text-sm px-4 py-2 rounded-xl border border-gray-300 hover:border-gray-400 transition-colors">
-            Clear
-          </button>
+        <div className="card mb-4 md:mb-6">
+          <div className="flex flex-wrap gap-3">
+            <select
+              value={filter.type}
+              onChange={(e) => setFilter({ ...filter, type: e.target.value })}
+              className="flex-1 min-w-[120px] bg-gray-50 border border-gray-300 rounded-xl px-3 py-2 text-gray-700 text-sm focus:outline-none focus:border-blue-500">
+              <option value="">All Types</option>
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
+            <input type="date" value={filter.startDate}
+              onChange={(e) => setFilter({ ...filter, startDate: e.target.value })}
+              className="flex-1 min-w-[130px] bg-gray-50 border border-gray-300 rounded-xl px-3 py-2 text-gray-700 text-sm focus:outline-none focus:border-blue-500"
+            />
+            <input type="date" value={filter.endDate}
+              onChange={(e) => setFilter({ ...filter, endDate: e.target.value })}
+              className="flex-1 min-w-[130px] bg-gray-50 border border-gray-300 rounded-xl px-3 py-2 text-gray-700 text-sm focus:outline-none focus:border-blue-500"
+            />
+            <button
+              onClick={() => setFilter({ type: '', startDate: '', endDate: '' })}
+              className="text-gray-500 hover:text-gray-900 text-sm px-4 py-2 rounded-xl border border-gray-300 hover:border-gray-400 transition-colors whitespace-nowrap">
+              Clear
+            </button>
+          </div>
         </div>
 
         {/* Add/Edit Form */}
         {showForm && (
-          <div className="bg-white border border-blue-200 rounded-2xl p-6 mb-6 shadow-sm">
+          <div className="bg-white border border-blue-200 rounded-2xl p-4 md:p-6 mb-4 md:mb-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-semibold text-gray-900">{editingId ? 'Edit Transaction' : 'New Transaction'}</h3>
               <button onClick={() => setShowForm(false)}>
@@ -140,11 +146,9 @@ export default function Transactions() {
               </button>
             </div>
 
-            {error && (
-              <div className="form-error">{error}</div>
-            )}
+            {error && <div className="form-error">{error}</div>}
 
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               <div>
                 <label className="text-sm text-gray-500 mb-1 block">Type</label>
                 <select value={formData.type}
@@ -200,13 +204,13 @@ export default function Transactions() {
               </div>
 
               {/* Quick Add Category */}
-              <div className="col-span-2 md:col-span-3 pt-3 border-t border-gray-200 mt-1">
+              <div className="col-span-1 sm:col-span-2 md:col-span-3 pt-3 border-t border-gray-200 mt-1">
                 <p className="text-sm text-gray-500 mb-2">➕ Quick add new category:</p>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <input type="text" placeholder="e.g. Food, Salary"
                     value={newCatName}
                     onChange={(e) => setNewCatName(e.target.value)}
-                    className="flex-1 bg-gray-50 border border-gray-300 rounded-xl px-3 py-2 text-gray-900 text-sm focus:outline-none focus:border-blue-500"
+                    className="flex-1 min-w-[120px] bg-gray-50 border border-gray-300 rounded-xl px-3 py-2 text-gray-900 text-sm focus:outline-none focus:border-blue-500"
                   />
                   <select value={newCatType}
                     onChange={(e) => setNewCatType(e.target.value)}
@@ -233,12 +237,11 @@ export default function Transactions() {
 
             <div className="flex gap-3 mt-4">
               <button onClick={handleSubmit}
-                className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-xl font-medium flex items-center gap-2 transition-colors">
+                className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-medium flex items-center gap-2 transition-colors text-sm">
                 <Check className="w-4 h-4" />
                 {editingId ? 'Update' : 'Add Transaction'}
               </button>
-              <button onClick={() => setShowForm(false)}
-                className="border border-gray-300 text-gray-500 hover:text-gray-900 px-6 py-2.5 rounded-xl transition-colors">
+              <button onClick={() => setShowForm(false)} className="btn-secondary">
                 Cancel
               </button>
             </div>
@@ -246,10 +249,10 @@ export default function Transactions() {
         )}
 
         {/* Transactions List */}
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <div className="card">
           {loading ? (
             <div className="flex items-center justify-center h-32">
-              <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+              <div className="spinner" />
             </div>
           ) : transactions.length === 0 ? (
             <div className="text-center py-12">
@@ -259,19 +262,21 @@ export default function Transactions() {
           ) : (
             <div className="space-y-3">
               {transactions.map((tx) => (
-                <div key={tx.id}
-                  className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${tx.type === 'income' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-500'}`}>
-                      {tx.type === 'income' ? <TrendingUp className="w-5 h-5" /> : <TrendingDown className="w-5 h-5" />}
+                <div key={tx.id} className="list-item">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className={`w-9 h-9 md:w-10 md:h-10 shrink-0 rounded-xl flex items-center justify-center ${tx.type === 'income' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-500'}`}>
+                      {tx.type === 'income' ? <TrendingUp className="w-4 h-4 md:w-5 md:h-5" /> : <TrendingDown className="w-4 h-4 md:w-5 md:h-5" />}
                     </div>
-                    <div>
-                      <p className="font-medium text-sm text-gray-900">{tx.description || tx.categoryName || 'Transaction'}</p>
-                      <p className="text-gray-400 text-xs">{new Date(tx.transactionDate).toLocaleDateString()} • {tx.frequency}</p>
+                    <div className="min-w-0">
+                      <p className="font-medium text-sm text-gray-900 truncate">{tx.description || tx.categoryName || 'Transaction'}</p>
+                      <p className="text-gray-400 text-xs">
+                        {new Date(tx.transactionDate).toLocaleDateString()}
+                        <span className="hidden sm:inline"> • {tx.frequency}</span>
+                      </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <span className={`font-semibold ${tx.type === 'income' ? 'text-green-600' : 'text-red-500'}`}>
+                  <div className="flex items-center gap-2 md:gap-4 shrink-0 ml-2">
+                    <span className={`font-semibold text-sm ${tx.type === 'income' ? 'text-green-600' : 'text-red-500'}`}>
                       {tx.type === 'income' ? '+' : '-'}₹{Number(tx.amount).toLocaleString()}
                     </span>
                     <button onClick={() => handleEdit(tx)}
