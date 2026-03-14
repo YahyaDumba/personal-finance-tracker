@@ -6,7 +6,7 @@ import useAuthStore from '../store/authStore';
 import Sidebar from '../components/common/Sidebar';
 
 const StatCard = ({ title, amount, icon: Icon, color, textColor }) => (
-  <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+  <div className="card">
     <div className="flex items-center justify-between mb-4">
       <span className="text-gray-500 text-sm font-medium">{title}</span>
       <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${color}`}>
@@ -69,7 +69,7 @@ export default function Dashboard() {
 
         {loading ? (
           <div className="flex items-center justify-center h-64">
-            <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+            <div className="spinner"/>
           </div>
         ) : (
           <>
@@ -99,7 +99,7 @@ export default function Dashboard() {
             </div>
 
             {/* Recent Transactions */}
-            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+            <div className="card">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-semibold text-gray-900">Recent Transactions</h2>
                 <Link to="/transactions" className="text-blue-600 text-sm hover:text-blue-500">
@@ -120,7 +120,7 @@ export default function Dashboard() {
                 <div className="space-y-3">
                   {dashboardData?.recentTransactions?.map((tx) => (
                     <div key={tx.id}
-                      className="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
+                      className="list-item">
                       <div className="flex items-center gap-3">
                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${tx.type === 'income' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
                           {tx.type === 'income' ? <TrendingUp className="w-5 h-5" /> : <TrendingDown className="w-5 h-5" />}

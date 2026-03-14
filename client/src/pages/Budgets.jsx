@@ -150,7 +150,7 @@ export default function Budgets() {
                 <Check className="w-4 h-4" />Save Budget
               </button>
               <button onClick={() => setShowForm(false)}
-                className="border border-gray-300 text-gray-500 hover:text-gray-900 px-6 py-2.5 rounded-xl transition-colors">
+                className="btn-secondary">
                 Cancel
               </button>
             </div>
@@ -173,7 +173,7 @@ export default function Budgets() {
               const percentage = Math.min(budget.percentageUsed || 0, 100);
               const isOverBudget = budget.percentageUsed > 100;
               return (
-                <div key={budget.id} className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                <div key={budget.id} className="card">
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <h3 className="font-semibold text-gray-900">{budget.categoryName}</h3>

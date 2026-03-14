@@ -20,8 +20,27 @@ export default function Register() {
         setError('');
     };
 
+    const validateEmailAndPass = () => {
+        if (!formData.email.trim()) {
+            setError('Email is required');
+            return false;
+        }
+        // Email format check
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+            setError('Please enter a valid email address');
+            return false;
+        }
+        if (formData.password.length < 8) {
+            setError('Password must be at least 8 characters');
+            return false;
+        }
+        return true;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+         if (!validateEmailAndPass()) return;
         setLoading(true);
         setError('');
         setSuccess('');

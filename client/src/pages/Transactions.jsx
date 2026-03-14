@@ -101,7 +101,7 @@ export default function Transactions() {
             <p className="text-gray-500 mt-1">Manage your income and expenses</p>
           </div>
           <button onClick={() => { setShowForm(true); setEditingId(null); }}
-            className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-medium flex items-center gap-2 transition-colors">
+            className="btn-primary">
             <Plus className="w-4 h-4" />Add Transaction
           </button>
         </div>
@@ -141,7 +141,7 @@ export default function Transactions() {
             </div>
 
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-600 rounded-xl p-3 mb-4 text-sm">{error}</div>
+              <div className="form-error">{error}</div>
             )}
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -149,7 +149,7 @@ export default function Transactions() {
                 <label className="text-sm text-gray-500 mb-1 block">Type</label>
                 <select value={formData.type}
                   onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                  className="w-full bg-gray-50 border border-gray-300 rounded-xl px-3 py-2.5 text-gray-900 focus:outline-none focus:border-blue-500">
+                  className="input-field">
                   <option value="expense">Expense</option>
                   <option value="income">Income</option>
                 </select>
@@ -159,14 +159,14 @@ export default function Transactions() {
                 <input type="number" value={formData.amount}
                   onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
                   placeholder="0.00"
-                  className="w-full bg-gray-50 border border-gray-300 rounded-xl px-3 py-2.5 text-gray-900 focus:outline-none focus:border-blue-500"
+                  className="input-field"
                 />
               </div>
               <div>
                 <label className="text-sm text-gray-500 mb-1 block">Date</label>
                 <input type="date" value={formData.transactionDate}
                   onChange={(e) => setFormData({ ...formData, transactionDate: e.target.value })}
-                  className="w-full bg-gray-50 border border-gray-300 rounded-xl px-3 py-2.5 text-gray-900 focus:outline-none focus:border-blue-500"
+                  className="input-field"
                 />
               </div>
               <div>
@@ -174,14 +174,14 @@ export default function Transactions() {
                 <input type="text" value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   placeholder="Optional"
-                  className="w-full bg-gray-50 border border-gray-300 rounded-xl px-3 py-2.5 text-gray-900 focus:outline-none focus:border-blue-500"
+                  className="input-field"
                 />
               </div>
               <div>
                 <label className="text-sm text-gray-500 mb-1 block">Frequency</label>
                 <select value={formData.frequency}
                   onChange={(e) => setFormData({ ...formData, frequency: e.target.value })}
-                  className="w-full bg-gray-50 border border-gray-300 rounded-xl px-3 py-2.5 text-gray-900 focus:outline-none focus:border-blue-500">
+                  className="input-field">
                   <option value="one-time">One-time</option>
                   <option value="weekly">Weekly</option>
                   <option value="monthly">Monthly</option>
@@ -191,7 +191,7 @@ export default function Transactions() {
                 <label className="text-sm text-gray-500 mb-1 block">Category</label>
                 <select value={formData.categoryId}
                   onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
-                  className="w-full bg-gray-50 border border-gray-300 rounded-xl px-3 py-2.5 text-gray-900 focus:outline-none focus:border-blue-500">
+                  className="input-field">
                   <option value="">No Category</option>
                   {categories.map((cat) => (
                     <option key={cat.id} value={cat.id}>{cat.name} ({cat.type})</option>

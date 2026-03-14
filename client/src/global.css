@@ -1,0 +1,59 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+
+  /* Inputs & Selects */
+  .input-field {
+    @apply w-full bg-gray-50 border border-gray-300 rounded-xl px-3 py-2.5 text-gray-900 focus:outline-none focus:border-blue-500;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-medium flex items-center gap-2 transition-colors;
+  }
+
+  .btn-secondary {
+    @apply border border-gray-300 text-gray-500 hover:text-gray-900 px-6 py-2.5 rounded-xl transition-colors;
+  }
+
+  .btn-danger {
+    @apply text-gray-400 hover:text-red-500 transition-colors;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-white border border-gray-200 rounded-2xl p-6 shadow-sm;
+  }
+
+  /* Page Header */
+  .page-title {
+    @apply text-2xl font-bold text-gray-900;
+  }
+
+  .page-subtitle {
+    @apply text-gray-500 mt-1;
+  }
+
+  /* Spinner */
+  .spinner {
+    @apply w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin;
+  }
+
+  /* Transaction/Budget row */
+  .list-item {
+    @apply flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors;
+  }
+
+  /* Icon Badge */
+  .icon-badge {
+    @apply w-10 h-10 rounded-xl flex items-center justify-center;
+  }
+
+  /* Form error */
+  .form-error {
+    @apply bg-red-50 border border-red-200 text-red-600 rounded-xl p-3 mb-4 text-sm;
+  }
+}
