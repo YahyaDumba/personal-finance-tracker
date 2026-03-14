@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Trash2, Edit2, TrendingUp, TrendingDown, ArrowUpDown, X, Check } from 'lucide-react';
+import { Plus, Trash2, Edit2, TrendingUp, TrendingDown, ArrowUpDown, X, Check, Search } from 'lucide-react';
 import { getTransactions, createTransaction, deleteTransaction, updateTransaction, createCategory, getCategories, deleteCategory } from '../services/api';
 import useAuthStore from '../store/authStore';
 import Sidebar from '../components/common/Sidebar';
@@ -14,6 +14,7 @@ export default function Transactions() {
     const [newCatName, setNewCatName] = useState('');
     const [newCatType, setNewCatType] = useState('expense');
     const [categories, setCategories] = useState([]);
+    const [search, setSearch] = useState('');
     const [formData, setFormData] = useState({
         type: 'expense', amount: '', description: '',
         categoryId: '', frequency: 'one-time',
@@ -44,6 +45,15 @@ export default function Transactions() {
         };
         loadCategories();
     }, []);
+
+    const filteredTransactions = transactions.filter((tx) => {
+        const term = search.toLowerCase();
+        return (
+            tx.description?.toLowerCase().includes(term) ||
+            tx.categoryName?.toLowerCase().includes(term) ||
+            tx.amount?.toString().includes(term)
+        );
+    });
 
     const handleSubmit = async () => {
         if (!formData.amount || !formData.transactionDate) {
@@ -112,28 +122,59 @@ export default function Transactions() {
                 {/* Filters */}
                 <div className="card mb-4 md:mb-6">
                     <div className="flex flex-wrap gap-3">
+                        {/* Search */}
+                        <div className="relative flex-1 min-w-[180px]">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                            <input
+                                type="text"
+                                placeholder="Search by description, category..."
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                className="w-full bg-gray-50 border border-gray-300 rounded-xl pl-9 pr-8 py-2 text-gray-700 text-sm focus:outline-none focus:border-blue-500"
+                            />
+                            {search && (
+                                <button
+                                    onClick={() => setSearch('')}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                    <X className="w-3.5 h-3.5" />
+                                </button>
+                            )}
+                        </div>
+
+                        {/* Type filter */}
                         <select
                             value={filter.type}
                             onChange={(e) => setFilter({ ...filter, type: e.target.value })}
-                            className="flex-1 min-w-[120px] bg-gray-50 border border-gray-300 rounded-xl px-3 py-2 text-gray-700 text-sm focus:outline-none focus:border-blue-500">
+                            className="bg-gray-50 border border-gray-300 rounded-xl px-3 py-2 text-gray-700 text-sm focus:outline-none focus:border-blue-500">
                             <option value="">All Types</option>
                             <option value="income">Income</option>
                             <option value="expense">Expense</option>
                         </select>
+
+                        {/* Date filters */}
                         <input type="date" value={filter.startDate}
                             onChange={(e) => setFilter({ ...filter, startDate: e.target.value })}
-                            className="flex-1 min-w-[130px] bg-gray-50 border border-gray-300 rounded-xl px-3 py-2 text-gray-700 text-sm focus:outline-none focus:border-blue-500"
+                            className="bg-gray-50 border border-gray-300 rounded-xl px-3 py-2 text-gray-700 text-sm focus:outline-none focus:border-blue-500"
                         />
                         <input type="date" value={filter.endDate}
                             onChange={(e) => setFilter({ ...filter, endDate: e.target.value })}
-                            className="flex-1 min-w-[130px] bg-gray-50 border border-gray-300 rounded-xl px-3 py-2 text-gray-700 text-sm focus:outline-none focus:border-blue-500"
+                            className="bg-gray-50 border border-gray-300 rounded-xl px-3 py-2 text-gray-700 text-sm focus:outline-none focus:border-blue-500"
                         />
+
+                        {/* Clear */}
                         <button
-                            onClick={() => setFilter({ type: '', startDate: '', endDate: '' })}
+                            onClick={() => { setFilter({ type: '', startDate: '', endDate: '' }); setSearch(''); }}
                             className="text-gray-500 hover:text-gray-900 text-sm px-4 py-2 rounded-xl border border-gray-300 hover:border-gray-400 transition-colors whitespace-nowrap">
                             Clear
                         </button>
                     </div>
+
+                    {/* Search results count */}
+                    {search && (
+                        <p className="text-xs text-gray-400 mt-2">
+                            {filteredTransactions.length} result{filteredTransactions.length !== 1 ? 's' : ''} for "{search}"
+                        </p>
+                    )}
                 </div>
 
                 {/* Add/Edit Form */}
@@ -239,7 +280,7 @@ export default function Transactions() {
                                         {categories.map((cat) => (
                                             <div key={cat.id}
                                                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium border
-            ${cat.type === 'income'
+                                                    ${cat.type === 'income'
                                                         ? 'bg-green-50 border-green-200 text-green-700'
                                                         : 'bg-red-50 border-red-200 text-red-700'}`}>
                                                 <span>{cat.name}</span>
@@ -281,14 +322,16 @@ export default function Transactions() {
                         <div className="flex items-center justify-center h-32">
                             <div className="spinner" />
                         </div>
-                    ) : transactions.length === 0 ? (
+                    ) : filteredTransactions.length === 0 ? (
                         <div className="text-center py-12">
                             <ArrowUpDown className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                            <p className="text-gray-400">No transactions found</p>
+                            <p className="text-gray-400">
+                                {search ? `No results for "${search}"` : 'No transactions found'}
+                            </p>
                         </div>
                     ) : (
                         <div className="space-y-3 list-none">
-                            {transactions.map((tx) => (
+                            {filteredTransactions.map((tx) => (
                                 <div key={tx.id} className="list-item">
                                     <div className="flex items-center gap-3 min-w-0">
                                         <div className={`w-9 h-9 md:w-10 md:h-10 shrink-0 rounded-xl flex items-center justify-center ${tx.type === 'income' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-500'}`}>
