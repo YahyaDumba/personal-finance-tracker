@@ -58,7 +58,7 @@ export default function Dashboard() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-500 mt-1">Welcome back, {user?.fullName}! 👋</p>
+            <p className="text-gray-500 mt-1">Welcome back, {user?.fullName}!</p>
           </div>
           <Link to="/transactions"
             className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-medium flex items-center gap-2 transition-colors">
