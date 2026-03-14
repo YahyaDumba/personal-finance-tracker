@@ -142,6 +142,21 @@ export default function Register() {
                         Already have an account?{' '}
                         <Link to="/login" className="text-blue-400 hover:text-blue-300">Sign in</Link>
                     </p>
+                    <div className="mt-6 p-4 bg-gray-800/50 border border-gray-700 rounded-xl">
+                        <p className="text-center text-gray-400 text-sm mb-3 font-medium">
+                            For Demo use these credentials in Login
+                        </p>
+                        <div className="space-y-2">
+                            <div className="flex items-center justify-between bg-gray-900 rounded-lg px-3 py-2">
+                                <span className="text-gray-500 text-xs">Email</span>
+                                <span className="text-blue-400 text-sm font-mono">yahyadumba63@gmail.com</span>
+                            </div>
+                            <div className="flex items-center justify-between bg-gray-900 rounded-lg px-3 py-2">
+                                <span className="text-gray-500 text-xs">Password</span>
+                                <span className="text-blue-400 text-sm font-mono">password</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
