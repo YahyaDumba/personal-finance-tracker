@@ -260,7 +260,7 @@ export default function Transactions() {
               <p className="text-gray-400">No transactions found</p>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-3 list-none">
               {transactions.map((tx) => (
                 <div key={tx.id} className="list-item">
                   <div className="flex items-center gap-3 min-w-0">
