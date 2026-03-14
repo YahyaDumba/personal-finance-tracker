@@ -1,4 +1,4 @@
-USE PersonalFinanceTracker;
+USE railway;
 
 -- SP 1: Get Monthly Summary
 DELIMITER //
