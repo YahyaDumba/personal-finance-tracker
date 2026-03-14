@@ -109,7 +109,7 @@ export default function Dashboard() {
                   </Link>
                 </div>
               ) : (
-                <div className="space-y-3">
+                <div className="space-y-3 list-none">
                   {dashboardData?.recentTransactions?.map((tx) => (
                     <div key={tx.id} className="list-item">
                       <div className="flex items-center gap-3 min-w-0">
