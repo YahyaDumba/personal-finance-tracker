@@ -1,37 +1,3 @@
-I'll explore your codebase and create comprehensive markdown documentation for you. Let me start by checking what's already documented and then examine the key files. 
-
-Read memory repo
-
-Read memory personal-finance-tracker.md
-
-Read [](file:///d%3A/Codebases/personal-finance-tracker/client/src/App.jsx)
-
-Read [](file:///d%3A/Codebases/personal-finance-tracker/server/src/app.js#1-1), lines 1 to 50
-
-Read [](file:///d%3A/Codebases/personal-finance-tracker/server/package.json)
-
-Read [](file:///d%3A/Codebases/personal-finance-tracker/client/package.json)
-
-Read [](file:///d%3A/Codebases/personal-finance-tracker/DB_QUERIES/Create%20Queries.sql)
-
-Read [](file:///d%3A/Codebases/personal-finance-tracker/server/src/routes/authRoutes.js)
-
-Read [](file:///d%3A/Codebases/personal-finance-tracker/server/src/routes/transactionRoutes.js)
-
-Read [](file:///d%3A/Codebases/personal-finance-tracker/server/src/routes/budgetRoutes.js)
-
-Read [](file:///d%3A/Codebases/personal-finance-tracker/server/src/controllers/authController.js)
-
-Read [](file:///d%3A/Codebases/personal-finance-tracker/server/src/routes/categoryRoutes.js)
-
-Read [](file:///d%3A/Codebases/personal-finance-tracker/server/src/routes/dashboardRoutes.js)
-
-Read [](file:///d%3A/Codebases/personal-finance-tracker/client/src/store/authStore.js)
-
-Based on my exploration of your codebase, here's the comprehensive markdown documentation:
-
----
-
 # Personal Finance Tracker - Complete Documentation
 
 ## Table of Contents
