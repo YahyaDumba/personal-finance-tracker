@@ -46,7 +46,7 @@ export default function Register() {
         setSuccess('');
         try {
             await registerUser(formData);
-            setSuccess('Registration successful! Please check your email to verify your account.');
+            setSuccess('Registration successful! Please check your email to verify your account. The Verification email is only sent to yahyadumba63@gmail.com for demo purposes.');
             setFormData({ fullName: '', email: '', password: '' }); // ← clear form
 
         } catch (err) {
