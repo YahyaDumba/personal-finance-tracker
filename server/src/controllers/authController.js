@@ -11,7 +11,7 @@ const register = async (req, res) => {
         await registerUser(fullName, email, password);
         return successResponse(res, 201, 'Please check your email for verification link');
     } catch (error) {
-        if(error.message = 'Email exists'){
+        if(error.message == 'Email exists'){
             return errorResponse(res, 409, 'Email exists already');
         }
         return errorResponse(res, 500, 'Server Error');
